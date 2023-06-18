@@ -5,10 +5,9 @@ import { allUsersMock } from '../../../user/domain/AllUsersMock';
 import { SearchUserByEmail } from '../../../../src/user/app/search/SearchUserByEmail';
 import { StringHash } from '../../../../src/shared/domain/StringHash';
 import { ProfileCreator } from '../../../../src/profile/app/create/ProfileCreator';
-import { ProfileMother } from '../../../profile/domain/ProfileMother';
+import { UserMother } from '../../../user/domain/UserMother';
 
-const profile = ProfileMother.random();
-const { user } = profile;
+const user = UserMother.random();
 
 const userByEmailSearcher = mock<SearchUserByEmail>();
 const stringHash = mock<StringHash>();
@@ -30,7 +29,7 @@ beforeEach(() => {
 
 describe('Register new user', () => {
   it('Should register a user with default profile', async () => {
-    await registerNewUser.run(profile);
+    await registerNewUser.run(user);
 
     expect(userByEmailSearcher.run).toBeCalledWith(user.email);
     expect(stringHash.generate).toBeCalledWith(user.password.value);

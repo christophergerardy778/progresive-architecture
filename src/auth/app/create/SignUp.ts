@@ -29,8 +29,7 @@ export class SignUp {
   ) {
   }
 
-  public async run(profile: Profile): Promise<void> {
-    const { user } = profile;
+  public async run(user: User): Promise<void> {
     const isEmailAlreadyTaken = await this.isEmailAlreadyTaken(user.email);
 
     if (isEmailAlreadyTaken) {
@@ -40,7 +39,7 @@ export class SignUp {
     const userWithEncryptedPassword = await this.createUserWithEncryptedPassword(user);
 
     await this.saveUser(userWithEncryptedPassword);
-    await this.saveProfile(profile);
+    await this.saveProfile(user.profile);
   }
 
   private async isEmailAlreadyTaken(email: UserEmail): Promise<boolean> {

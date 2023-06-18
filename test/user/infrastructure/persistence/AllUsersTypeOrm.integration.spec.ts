@@ -9,13 +9,18 @@ import { Criteria } from '../../../../src/shared/domain/criteria/Criteria';
 import { Filter } from '../../../../src/shared/domain/criteria/Filter';
 import { Operator } from '../../../../src/shared/domain/criteria/Operator';
 import { Order } from '../../../../src/shared/domain/criteria/Order';
+import { profileTypes } from '../../../../src/profile/infrastructure/di/ProfileTypes';
+import { AllProfiles } from '../../../../src/profile/domain/AllProfiles';
+import { User } from '../../../../src/user/domain/User';
 
 const user = UserMother.random();
-const connection = container.get < Connection >(sharedTypes.connection);
-const allUsers = container.get < AllUsers >(userTypes.allUsers);
+const connection = container.get <Connection>(sharedTypes.connection);
+const allUsers = container.get <AllUsers>(userTypes.allUsers);
+const allProfiles = container.get <AllProfiles>(profileTypes.allProfiles);
 
 beforeAll(async () => {
   await connection.open();
+  await allProfiles.save(user.profile);
 });
 
 afterAll(async () => {
@@ -48,5 +53,6 @@ describe('All users', () => {
 
     expect(Array.isArray(result)).toBeTruthy();
     expect(result.length).toBeGreaterThan(0);
+    expect(result[0] instanceof User).toBeTruthy();
   });
 });

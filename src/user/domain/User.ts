@@ -1,9 +1,12 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import {
+  Column, Entity, JoinColumn, OneToOne, PrimaryColumn,
+} from 'typeorm';
 import { UserId } from './value-object/UserId';
 import { UserName } from './value-object/UserName';
 import { UserLastname } from './value-object/UserLastname';
 import { UserEmail } from './value-object/UserEmail';
 import { UserPassword } from './value-object/UserPassword';
+import { Profile } from '../../profile/domain/Profile';
 
 @Entity()
 export class User {
@@ -56,12 +59,17 @@ export class User {
   })
   readonly password!: UserPassword;
 
+  @OneToOne(() => Profile, { eager: true })
+  @JoinColumn()
+  readonly profile!: Profile;
+
   constructor(value?: {
     id: UserId,
     name: UserName,
     lastname: UserLastname,
     email: UserEmail,
-    password: UserPassword
+    password: UserPassword,
+    profile: Profile,
   }) {
     if (value) {
       this.id = value.id;
@@ -69,6 +77,7 @@ export class User {
       this.lastname = value.lastname;
       this.email = value.email;
       this.password = value.password;
+      this.profile = value.profile;
     }
   }
 
@@ -77,7 +86,8 @@ export class User {
     name: UserName,
     lastname: UserLastname,
     email: UserEmail,
-    password: UserPassword
+    password: UserPassword,
+    profile: Profile,
   }): User {
     return new User(value);
   }
@@ -89,6 +99,7 @@ export class User {
       email: user.email,
       lastname: user.lastname,
       password: newPassword,
+      profile: user.profile,
     });
   }
 }

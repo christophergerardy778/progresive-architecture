@@ -6,10 +6,13 @@ import { Criteria } from '../../../shared/domain/criteria/Criteria';
 import { Connection } from '../../../shared/infrastructure/Connection';
 import { sharedTypes } from '../../../shared/infrastructure/di/SharedTypes';
 import { QueryBuilderAdapter } from '../../../shared/infrastructure/QueryBuilderAdapter';
+import { UserTypeOrmMapper } from '../mapper/UserTypeOrmMapper';
 
 @injectable()
 export class AllUsersTypeOrm implements AllUsers {
   private readonly repository: Repository<User>;
+
+  private readonly alias = 'user';
 
   constructor(
     @inject(sharedTypes.connection) private connection: Connection,
@@ -24,15 +27,29 @@ export class AllUsersTypeOrm implements AllUsers {
 
   async findByCriteria(criteria: Criteria): Promise<User[]> {
     const queryBuilder = this.queryBuilderAdapter.run({
-      alias: 'user',
+      alias: this.alias,
       criteria,
       entity: User,
     });
 
-    return queryBuilder.execute();
+    queryBuilder.leftJoinAndSelect('user.profile', 'profile');
+    const result = await queryBuilder.execute();
+
+    return result.map(UserTypeOrmMapper.map);
   }
 
   async save(user: User): Promise<void> {
-    await this.repository.save(user);
+    await this.repository.createQueryBuilder(this.alias)
+      .insert()
+      .into(this.alias)
+      .values({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        lastname: user.lastname,
+        password: user.password,
+        profile: user.profile.id.value,
+      })
+      .execute();
   }
 }

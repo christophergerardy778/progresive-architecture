@@ -1,6 +1,7 @@
 import { DataSource, Repository } from 'typeorm';
 import { injectable } from 'inversify';
 import { User } from '../../user/domain/User';
+import { Profile } from '../../profile/domain/Profile';
 
 @injectable()
 export class Connection {
@@ -16,7 +17,7 @@ export class Connection {
       database: process.env.DB_NAME,
       synchronize: true,
       logging: false,
-      entities: [User],
+      entities: [User, Profile],
       subscribers: [],
       migrations: [],
     });
@@ -32,6 +33,10 @@ export class Connection {
 
   getRepository(entity: any): Repository<any> {
     return this.connection.getRepository(entity);
+  }
+
+  query(query: string, parameters?: any[]) {
+    return this.connection.query(query, parameters);
   }
 
   queryBuilder(entity: any, alias: string) {
