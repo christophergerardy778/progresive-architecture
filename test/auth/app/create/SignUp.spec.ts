@@ -1,4 +1,4 @@
-import {RegisterNewUser} from '../../../../src/auth/app/create/RegisterNewUser';
+import {SignUp} from '../../../../src/auth/app/create/SignUp';
 import {UserCreator} from '../../../../src/user/app/create/UserCreator';
 import {allUsersMock} from '../../../user/domain/AllUsersMock';
 import {SearchUserByEmail} from '../../../../src/user/app/search/SearchUserByEmail';
@@ -15,7 +15,7 @@ const stringHash = mock<StringHash>();
 const userCreator = mock<UserCreator>();
 const profileCreator = mock<ProfileCreator>();
 
-const registerNewUser = new RegisterNewUser(
+const registerNewUser = new SignUp(
 	stringHash,
 	userCreator,
 	userByEmailSearcher,

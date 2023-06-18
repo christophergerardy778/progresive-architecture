@@ -1,15 +1,18 @@
-import {User} from '../domain/User';
-import {AllUsers} from '../domain/AllUsers';
-import {UserEmail} from '../domain/value-object/UserEmail';
-import {Criteria} from '../../shared/domain/criteria/Criteria';
-import {Filter} from '../../shared/domain/criteria/Filter';
-import {FieldName} from '../../shared/domain/criteria/FieldName';
-import {FilterOperator} from '../../shared/domain/criteria/FilterOperator';
-import {Operator} from '../../shared/domain/criteria/Operator';
-import {Order} from '../../shared/domain/criteria/Order';
+import {User} from '../../domain/User';
+import {AllUsers} from '../../domain/AllUsers';
+import {UserEmail} from '../../domain/value-object/UserEmail';
+import {Criteria} from '../../../shared/domain/criteria/Criteria';
+import {Filter} from '../../../shared/domain/criteria/Filter';
+import {FieldName} from '../../../shared/domain/criteria/FieldName';
+import {FilterOperator} from '../../../shared/domain/criteria/FilterOperator';
+import {Operator} from '../../../shared/domain/criteria/Operator';
+import {Order} from '../../../shared/domain/criteria/Order';
+import {inject, injectable} from 'inversify';
+import {userTypes} from '../../infrastructure/di/UserTypes';
 
+@injectable()
 export class SearchUserByEmail {
-	constructor(private allUsers: AllUsers) {
+	constructor(@inject(userTypes.allUsers) private allUsers: AllUsers) {
 	}
 
 	public async run(userEmail: UserEmail): Promise<User | null> {

@@ -1,19 +1,17 @@
-import {UserCreator} from '../../../src/user/app/Create/UserCreator';
-import {UserMother} from '../domain/UserMother';
-import {allUsersMock} from '../domain/AllUsersMock';
-import {SearchUserByEmail} from '../../../src/user/app/Search/SearchUserByEmail';
+import {UserCreator} from '../../../../src/user/app/create/UserCreator';
+import {UserMother} from '../../domain/UserMother';
+import {allUsersMock} from '../../domain/AllUsersMock';
 
-const searchUserByEmail = new SearchUserByEmail(allUsersMock);
+const user = UserMother.random();
+
 const userCreator = new UserCreator(
 	allUsersMock,
-	searchUserByEmail,
 );
 
 describe('User creator', () => {
 	it('Should save a user', async () => {
-		allUsersMock.findByCriteria.mockReturnValue(Promise.resolve([]));
-
-		await userCreator.run(UserMother.random());
+		await userCreator.run(user);
 		expect(allUsersMock.save).toBeCalled();
+		expect(allUsersMock.save).toBeCalledWith(user);
 	});
 });

@@ -1,6 +1,6 @@
-import {allUsersMock} from '../domain/AllUsersMock';
-import {SearchUserByEmail} from '../../../src/user/app/Search/SearchUserByEmail';
-import {UserMother} from '../domain/UserMother';
+import {allUsersMock} from '../../domain/AllUsersMock';
+import {SearchUserByEmail} from '../../../../src/user/app/search/SearchUserByEmail';
+import {UserMother} from '../../domain/UserMother';
 import {mockReset} from 'jest-mock-extended';
 
 const user = UserMother.random();

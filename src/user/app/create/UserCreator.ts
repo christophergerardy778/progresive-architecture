@@ -1,4 +1,14 @@
+import {User} from '../../domain/User';
+import {AllUsers} from '../../domain/AllUsers';
+import {inject, injectable} from 'inversify';
+import {userTypes} from '../../infrastructure/di/UserTypes';
+
+@injectable()
 export class UserCreator {
-	public run() {
+	constructor(@inject(userTypes.allUsers) private readonly allUser: AllUsers) {
+	}
+
+	public async run(user: User): Promise<void> {
+		await this.allUser.save(user);
 	}
 }

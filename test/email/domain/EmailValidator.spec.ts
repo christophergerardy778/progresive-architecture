@@ -1,4 +1,4 @@
-import {EmailValidator} from '../../../src/user/domain/EmailValidator';
+import {EmailValidator} from '../../../src/email/domain/EmailValidator';
 import {faker} from '@faker-js/faker';
 
 const emailValidator = new EmailValidator();

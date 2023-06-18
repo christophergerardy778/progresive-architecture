@@ -1,3 +1,2 @@
-export class EmailInvalid {
-
+export class EmailInvalid extends Error {
 }

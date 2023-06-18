@@ -7,18 +7,31 @@ import {UserPassword} from '../../../user/domain/value-object/UserPassword';
 import {UserEmailAlreadyTaken} from '../../../user/domain/UserEmailAlreadyTaken';
 import {ProfileCreator} from '../../../profile/app/create/ProfileCreator';
 import {Profile} from '../../../profile/domain/Profile';
+import {inject, injectable} from 'inversify';
+import {sharedTypes} from '../../../shared/infrastructure/di/SharedTypes';
+import {userTypes} from '../../../user/infrastructure/di/UserTypes';
+import {profileTypes} from '../../../profile/infrastructure/di/ProfileTypes';
 
-export class RegisterNewUser {
+@injectable()
+export class SignUp {
 
 	constructor(
+		@inject(sharedTypes.stringHash)
 		private readonly stringHash: StringHash,
+
+		@inject(userTypes.userCreator)
 		private readonly userCreator: UserCreator,
+
+		@inject(userTypes.searchUserByEmail)
 		private readonly searchUserByEmail: SearchUserByEmail,
+
+		@inject(profileTypes.profileCreator)
 		private readonly profileCreator: ProfileCreator,
-	) {}
+	) {
+	}
 
 	public async run(profile: Profile): Promise<void> {
-		const { user } = profile;
+		const {user} = profile;
 		const isEmailAlreadyTaken = await this.isEmailAlreadyTaken(user.email);
 
 		if (isEmailAlreadyTaken) {
