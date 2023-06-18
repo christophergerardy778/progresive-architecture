@@ -1,17 +1,18 @@
-import {OrderBy} from './OrderBy';
-import {OrderTypes} from './OrderTypes';
-import {OrderType} from './OrderType';
+import { OrderBy } from './OrderBy';
+import { OrderTypes } from './OrderTypes';
+import { OrderType } from './OrderType';
 
 export class Order {
-	readonly orderBy!: OrderBy;
-	readonly orderType!: OrderType;
+  readonly orderBy!: OrderBy;
 
-	constructor(orderBy: OrderBy, orderType: OrderType) {
-		this.orderBy = orderBy;
-		this.orderType = orderType;
-	}
+  readonly orderType!: OrderType;
 
-	public static asc(orderBy: string) {
-		return new Order(new OrderBy(orderBy), new OrderType(OrderTypes.ASC));
-	}
+  constructor(orderBy: OrderBy, orderType: OrderType) {
+    this.orderBy = orderBy;
+    this.orderType = orderType;
+  }
+
+  public static asc(orderBy: string) {
+    return new Order(new OrderBy(orderBy), new OrderType(OrderTypes.ASC));
+  }
 }

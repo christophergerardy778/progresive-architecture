@@ -1,3 +1,3 @@
 export const authTypes = {
-	signUp: Symbol('sign-up'),
-}
+  signUp: Symbol('sign-up'),
+};

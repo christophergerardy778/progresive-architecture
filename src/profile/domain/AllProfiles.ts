@@ -1,5 +1,5 @@
-import {Profile} from './Profile';
+import { Profile } from './Profile';
 
 export interface AllProfiles {
-	save(profile: Profile): Promise<void>;
+  save(profile: Profile): Promise<void>;
 }
