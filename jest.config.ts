@@ -5,16 +5,17 @@ dotenv.config({
   path: '.env.test',
 });
 
-// Sync object
 const config: Config.InitialOptions = {
+  testEnvironment: 'node',
   verbose: true,
   transform: {
-    '^.+\\.tsx?$': 'ts-jest',
+    '^.+\\.tsx?$': [
+      'ts-jest',
+      { isolatedModules: true },
+    ],
   },
-  globals: {
-    'ts-jest': {
-      isolatedModules: true,
-    },
-  },
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 };
+
+// eslint-disable-next-line import/no-default-export
 export default config;

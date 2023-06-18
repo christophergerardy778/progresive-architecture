@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "nodemon server/index.ts -r ts-node/register --inspect",
     "test": "jest",
+		"test:unit": "jest .*\\.spec\\.ts$",
     "prepare": "husky install",
+		"test:e2e": "jest .*\\.integration.spec\\.ts$",
     "lint": "npx eslint ./src --ext .js,.jsx,.ts,.tsx --fix"
   },
   "keywords": [],
