@@ -3,6 +3,7 @@ import { ProfilePhoto } from './value-object/ProfilePhoto';
 import { ProfileUsername } from './value-object/ProfileUsername';
 import { ProfileId } from './value-object/ProfileId';
 import { ProfileLastConnection } from './value-object/ProfileLastConnection';
+import { UserEmail } from '../../user/domain/value-object/UserEmail';
 
 @Entity()
 export class Profile {
@@ -64,5 +65,14 @@ export class Profile {
     username: ProfileUsername,
   }) {
     return new Profile(params);
+  }
+
+  public static default(userEmail: UserEmail) {
+    return new Profile({
+      id: ProfileId.random(),
+      photo: ProfilePhoto.empty(),
+      lastConnection: ProfileLastConnection.now(),
+      username: ProfileUsername.createUsernameDefault(userEmail),
+    });
   }
 }

@@ -7,7 +7,7 @@ import { Connection } from '../src/shared/infrastructure/Connection';
 import { authRouter } from './auth/router';
 
 const app = express();
-const connection = container.get < Connection >(sharedTypes.connection);
+const connection = container.get<Connection>(sharedTypes.connection);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

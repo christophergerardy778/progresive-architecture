@@ -29,6 +29,8 @@ beforeEach(() => {
 
 describe('Register new user', () => {
   it('Should register a user with default profile', async () => {
+    userByEmailSearcher.run.mockReturnValue(Promise.resolve(null));
+
     await registerNewUser.run(user);
 
     expect(userByEmailSearcher.run).toBeCalledWith(user.email);

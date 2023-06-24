@@ -38,13 +38,13 @@ export class SignUp {
 
     const userWithEncryptedPassword = await this.createUserWithEncryptedPassword(user);
 
-    await this.saveUser(userWithEncryptedPassword);
     await this.saveProfile(user.profile);
+    await this.saveUser(userWithEncryptedPassword);
   }
 
   private async isEmailAlreadyTaken(email: UserEmail): Promise<boolean> {
     const result = await this.searchUserByEmail.run(email);
-    return result === null;
+    return result !== null;
   }
 
   private async createUserWithEncryptedPassword(user: User): Promise<User> {
